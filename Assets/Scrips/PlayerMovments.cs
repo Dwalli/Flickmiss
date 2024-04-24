@@ -20,8 +20,8 @@ public class PlayerMovments : MonoBehaviour
 
     public float speed = 0.2f;
 
-    public enum ActiveNodes { Normal, Inverted, Teleport }
-    public ActiveNodes node = ActiveNodes.Normal;
+    public enum ActiveNodes { Normal, Inverted, Teleport } // Enum of posible nodes
+    public ActiveNodes node = ActiveNodes.Normal; 
 
     // Start is called before the first frame update
     void Start()
@@ -151,7 +151,7 @@ public class PlayerMovments : MonoBehaviour
             count++;
         }
 
-        Debug.Log("found node" + locatedNodes[0] + locatedNodes[1] + locatedNodes[2] + locatedNodes[3]);
+        Debug.Log("found node" + locatedNodes[0] + locatedNodes[1] + locatedNodes[2] + locatedNodes[3]); // report all of the node found
     }
 
 
