@@ -2,28 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static PlayerMovments;
+
 
 public class BallAction : BaseHazzards
 {
+    public BallAction(int damage, float speed) : base(damage, speed)
+    {
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player1"))
         {
-            if (nextLocation == pointB.transform.position)
+            if (nextLocation == pointA.transform.position) // To preform the bounce
             {
-                //nextLocation = pointA.transform.position;
-                //transform.position = Vector2.MoveTowards(transform.position, nextLocation, speed);
+                nextLocation = pointB.transform.position;
+                transform.position = Vector2.MoveTowards(transform.position, nextLocation, speed);
+                Debug.Log("Bounce");
+            }
+            else if (nextLocation == pointB.transform.position)
+            {
+                nextLocation = pointA.transform.position;
+                transform.position = Vector2.MoveTowards(transform.position, nextLocation, speed);
                 Debug.Log("Bounce");
             }
 
-            if (nextLocation == pointA.transform.position)
+
+            if (collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealthComponent))
             {
-                //nextLocation = pointB.transform.position;
-                //transform.position = Vector2.MoveTowards(transform.position, nextLocation, speed);
-                Debug.Log("Bounce");
+                playerHealthComponent.takeDamage(damage);
             }
+
         }
 
     }
+
 }

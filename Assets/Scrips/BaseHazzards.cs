@@ -13,7 +13,11 @@ public class BaseHazzards : MonoBehaviour
     protected Vector3 nextLocation;
 
 
-
+    public BaseHazzards(int damage, float speed) //contructor
+    {
+        this.damage = damage;
+        this.speed = speed;
+    } 
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +29,7 @@ public class BaseHazzards : MonoBehaviour
     {
         ABMovements();
     }
+
 
     public virtual void ABMovements()
     {

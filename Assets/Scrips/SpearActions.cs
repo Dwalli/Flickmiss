@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SpearActions : BaseHazzards
 {
+    public SpearActions(int damage, float speed) : base(damage, speed)
+    {
+    }
+
     public override void ABMovements()
     {
         base.ABMovements();
@@ -17,6 +21,15 @@ public class SpearActions : BaseHazzards
             transform.eulerAngles = new Vector3(0, 0, 180);
         }
 
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) // when this object colied with the player
+    {
+        if (collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealthComponent))
+        {
+            playerHealthComponent.takeDamage(damage);
+        }
 
     }
 

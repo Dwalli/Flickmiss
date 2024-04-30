@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class PlayerMovments : MonoBehaviour
+public class PlayerMovments : PlayerSystems
 {
+
     RaycastHit2D findNodeHit;
     public Transform player;
 
     private Vector3 newLocation;
-    [SerializeField]private bool canMove = true;
+    [SerializeField] private bool canMove = true;
+
+    //Movement systems
+    [SerializeField] private float playerSpeed = 1;
 
     [SerializeField] private float clock;
     [SerializeField] private float resetClcok = 1;
@@ -18,10 +22,9 @@ public class PlayerMovments : MonoBehaviour
     private Vector2[] locatedNodes = new Vector2[4]; // array of new possible node locations
     private Vector3[] directions = { new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, -1, 0) }; // right left up down
 
-    public float speed = 0.2f;
 
     public enum ActiveNodes { Normal, Inverted, Teleport } // Enum of posible nodes
-    public ActiveNodes node = ActiveNodes.Normal; 
+    private ActiveNodes node = ActiveNodes.Normal; 
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +41,6 @@ public class PlayerMovments : MonoBehaviour
 
     }
 
- 
     private void ActivatedNode(ActiveNodes activeNodes)
     {
         switch (activeNodes)
@@ -60,6 +62,24 @@ public class PlayerMovments : MonoBehaviour
         if (collision.gameObject.CompareTag("Normal")) { ActivatedNode(node = ActiveNodes.Normal); Debug.Log("Normal"); }
     }
 
+    void NewNodeCoundoun()
+    {
+        if (player.position == newLocation)
+        {
+            clock -= Time.deltaTime;
+            if (clock <= 0)
+            {
+                canMove = true;
+            }
+
+            GetNodeLocations();
+        }
+        else
+        {
+            clock = resetClcok;
+        }
+    }
+
     void PlayerMove()
     {
         // getting the user inputs
@@ -68,21 +88,12 @@ public class PlayerMovments : MonoBehaviour
         if (Input.GetKey(KeyCode.W) && canMove == true) { newLocation = locatedNodes[2]; canMove = false; }
         if (Input.GetKey(KeyCode.S) && canMove == true) { newLocation = locatedNodes[3]; canMove = false; }
 
-        if (player.position == newLocation)
-        {
-            clock -= Time.deltaTime;
-            if (clock <= 0) 
-            {  
-                clock = resetClcok;
-                canMove = true;
-            }
-      
-            GetNodeLocations();
-        }
+        NewNodeCoundoun();
 
-        transform.position = Vector2.MoveTowards(transform.position, newLocation, speed);
+        transform.position = Vector2.MoveTowards(transform.position, newLocation, playerSpeed);
 
     }
+
 
     // has the player teleport to a selected node
     void PlayerMoveTeleport()
@@ -93,16 +104,7 @@ public class PlayerMovments : MonoBehaviour
         if (Input.GetKey(KeyCode.W) && canMove == true) { newLocation = locatedNodes[2]; canMove = false; }
         if (Input.GetKey(KeyCode.S) && canMove == true) { newLocation = locatedNodes[3]; canMove = false; }
 
-        if (player.position == newLocation)
-        {
-            clock -= Time.deltaTime;
-            if (clock <= 0)
-            {
-                clock = resetClcok;
-                canMove = true;
-            }
-            GetNodeLocations();
-        }
+        NewNodeCoundoun();
 
         transform.position = newLocation;
 
@@ -117,18 +119,9 @@ public class PlayerMovments : MonoBehaviour
         if (Input.GetKey(KeyCode.W) && canMove == true) { newLocation = locatedNodes[3]; canMove = false; }
         if (Input.GetKey(KeyCode.S) && canMove == true) { newLocation = locatedNodes[2]; canMove = false; }
 
-        if (player.position == newLocation)
-        {
-            clock -= Time.deltaTime;
-            if (clock <= 0)
-            {
-                clock = resetClcok;
-                canMove = true;
-            }
-            GetNodeLocations();
-        }
+        NewNodeCoundoun();
 
-        transform.position = Vector2.MoveTowards(transform.position, newLocation, speed);
+        transform.position = Vector2.MoveTowards(transform.position, newLocation, playerSpeed);
 
     }
 
@@ -138,8 +131,8 @@ public class PlayerMovments : MonoBehaviour
         int count = 0;
         foreach (var item in locatedNodes)
         {
-           findNodeHit = Physics2D.Raycast(transform.position + directions[count], transform.TransformDirection(directions[count]));  // create the ray
-            if (findNodeHit.collider != null)
+           findNodeHit = Physics2D.Raycast(transform.position + directions[count], transform.TransformDirection(directions[count]),12,LayerMask.GetMask("Node's"));  // create the rays only on layer where nodes are at
+            if (findNodeHit.collider != null && findNodeHit.collider.gameObject.layer == 6)
             {
                 locatedNodes[count] = findNodeHit.collider.gameObject.transform.position;
             }
