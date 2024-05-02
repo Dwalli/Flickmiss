@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerMovments : PlayerSystems
 {
+    [SerializeField] private PlayerHealth playerHealth;
 
     RaycastHit2D findNodeHit;
     public Transform player;
@@ -19,11 +20,13 @@ public class PlayerMovments : PlayerSystems
     [SerializeField] private float clock;
     [SerializeField] private float resetClcok = 1;
 
+    private float castTime = 0.1f;
+    private float cast;
+
     private Vector2[] locatedNodes = new Vector2[4]; // array of new possible node locations
     private Vector3[] directions = { new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, -1, 0) }; // right left up down
 
-
-    public enum ActiveNodes { Normal, Inverted, Teleport } // Enum of posible nodes
+    public enum ActiveNodes { Normal, Inverted, Teleport, Blank } // Enum of posible nodes
     private ActiveNodes node = ActiveNodes.Normal; 
 
     // Start is called before the first frame update
@@ -37,8 +40,24 @@ public class PlayerMovments : PlayerSystems
     private void FixedUpdate()
     {
         DrawRays();
-        ActivatedNode(node);
+        if (playerHealth?.Health() <= 0)
+        {
+            ResetPlayer();
+        }
+        else { ActivatedNode(node); }
 
+        Debug.Log(node);
+
+
+
+    }
+
+    private void ResetPlayer() //when player health reached 0 reset the game
+    {
+        newLocation = playerHealth.SpawnPoint();
+        transform.position = newLocation;
+        playerHealth.ResetHealth();
+       // canMove = false;
     }
 
     private void ActivatedNode(ActiveNodes activeNodes)
@@ -50,16 +69,23 @@ public class PlayerMovments : PlayerSystems
             case ActiveNodes.Inverted: PlayerMoveInverted(); break;
 
             case ActiveNodes.Teleport: PlayerMoveTeleport(); break;
+
+            default: PlayerMove(); break;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Inverted")) { ActivatedNode(node = ActiveNodes.Inverted); Debug.Log("Inverted"); }
+        if (collision.gameObject.CompareTag("Inverted")) { node = ActiveNodes.Inverted; Debug.Log("Inverted"); }
 
-        if (collision.gameObject.CompareTag("Teleport")) { ActivatedNode(node = ActiveNodes.Teleport); Debug.Log("Teleport"); }
+        if (collision.gameObject.CompareTag("Teleport")) { node = ActiveNodes.Teleport; Debug.Log("Teleport"); }
 
-        if (collision.gameObject.CompareTag("Normal")) { ActivatedNode(node = ActiveNodes.Normal); Debug.Log("Normal"); }
+        if (collision.gameObject.CompareTag("Normal")) { node = ActiveNodes.Normal; Debug.Log("Normal"); }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        node = ActiveNodes.Blank; Debug.Log("Blank");
     }
 
     void NewNodeCoundoun()
@@ -98,15 +124,18 @@ public class PlayerMovments : PlayerSystems
     // has the player teleport to a selected node
     void PlayerMoveTeleport()
     {
+
         // getting the user inputs
-        if (Input.GetKey(KeyCode.D) && canMove == true) { newLocation = locatedNodes[0]; canMove = false; }
-        if (Input.GetKey(KeyCode.A) && canMove == true) { newLocation = locatedNodes[1]; canMove = false; }
-        if (Input.GetKey(KeyCode.W) && canMove == true) { newLocation = locatedNodes[2]; canMove = false; }
-        if (Input.GetKey(KeyCode.S) && canMove == true) { newLocation = locatedNodes[3]; canMove = false; }
+        if (Input.GetKey(KeyCode.D) && canMove == true) { newLocation = locatedNodes[0]; canMove = false; cast = castTime; }
+        if (Input.GetKey(KeyCode.A) && canMove == true) { newLocation = locatedNodes[1]; canMove = false; cast = castTime; }
+        if (Input.GetKey(KeyCode.W) && canMove == true) { newLocation = locatedNodes[2]; canMove = false; cast = castTime; }
+        if (Input.GetKey(KeyCode.S) && canMove == true) { newLocation = locatedNodes[3]; canMove = false; cast = castTime; }
 
         NewNodeCoundoun();
 
-        transform.position = newLocation;
+
+        cast -= Time.deltaTime;
+        if (cast < 0) transform.position = newLocation;
 
     }
 
@@ -144,7 +173,7 @@ public class PlayerMovments : PlayerSystems
             count++;
         }
 
-        Debug.Log("found node" + locatedNodes[0] + locatedNodes[1] + locatedNodes[2] + locatedNodes[3]); // report all of the node found
+     //   Debug.Log("found node" + locatedNodes[0] + locatedNodes[1] + locatedNodes[2] + locatedNodes[3]); // report all of the node found
     }
 
 

@@ -123,6 +123,26 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &216512751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4307072775765961321, guid: 75b7618555358204d98af6ec9e8fbbe0, type: 3}
+  m_PrefabInstance: {fileID: 2986419888381888717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &216512757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216512751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e01c1292be1da4f9e29e5bfc10d419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 6
+  curHealth: 0
+  spawnPoint: {x: 0, y: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,6 +234,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2986419888381888722, guid: 75b7618555358204d98af6ec9e8fbbe0, type: 3}
+      propertyPath: resetClcok
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986419888381888722, guid: 75b7618555358204d98af6ec9e8fbbe0, type: 3}
+      propertyPath: playerHealth
+      value: 
+      objectReference: {fileID: 216512757}
     - target: {fileID: 4307072775765961321, guid: 75b7618555358204d98af6ec9e8fbbe0, type: 3}
       propertyPath: m_Name
       value: Player
@@ -319,6 +347,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3274038077513015721, guid: 44de9546db866154b89355efcf33eb88, type: 3}
+      propertyPath: damage
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44de9546db866154b89355efcf33eb88, type: 3}
 --- !u!1001 &6012411780629272958
@@ -328,6 +360,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6012411779714410604, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411779714410604, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Normal
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411779834264703, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411779834264703, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Normal
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411780507438669, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411780507438669, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Inverted
+      objectReference: {fileID: 0}
     - target: {fileID: 6012411780654170956, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -375,6 +431,62 @@ PrefabInstance:
     - target: {fileID: 6012411780654170959, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
       propertyPath: m_Name
       value: Node Collections
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411780654170959, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411780654170959, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Inverted
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411780800312902, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411780800312902, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Teleport
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781154021548, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781154021548, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Normal
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781157374587, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781157374587, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Teleport
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781271991323, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781271991323, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Node
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781275909427, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781275909427, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Inverted
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781359462412, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012411781359462412, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
+      propertyPath: m_TagString
+      value: Normal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4abc5d693db179241b0a82cb3a71e988, type: 3}
@@ -432,6 +544,10 @@ PrefabInstance:
     - target: {fileID: 5318394031373345003, guid: 147b974bc647d8749bff5b938f70a164, type: 3}
       propertyPath: m_Name
       value: BALL
+      objectReference: {fileID: 0}
+    - target: {fileID: 8630769575897627403, guid: 147b974bc647d8749bff5b938f70a164, type: 3}
+      propertyPath: damage
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 147b974bc647d8749bff5b938f70a164, type: 3}

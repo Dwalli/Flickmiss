@@ -8,6 +8,7 @@ TagManager:
   - Inverted
   - Normal
   - Player1
+  - Node
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Node's
   - 
   - 
   - 
