@@ -160,7 +160,7 @@ public class PlayerMovments : PlayerSystems
         int count = 0;
         foreach (var item in locatedNodes)
         {
-           findNodeHit = Physics2D.Raycast(transform.position + directions[count], transform.TransformDirection(directions[count]),12,LayerMask.GetMask("Node's"));  // create the rays only on layer where nodes are at
+            findNodeHit = Physics2D.Raycast(transform.position + directions[count], transform.TransformDirection(directions[count]),12,LayerMask.GetMask("Node's"));  // create the rays only on layer where nodes are at
             if (findNodeHit.collider != null && findNodeHit.collider.gameObject.layer == 6)
             {
                 locatedNodes[count] = findNodeHit.collider.gameObject.transform.position;

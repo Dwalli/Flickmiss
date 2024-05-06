@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class BallAction : BaseHazzards
 {
-    public BallAction(int damage, float speed) : base(damage, speed)
-    {
-    }
+    //public BallAction(int damage, float speed) : base(damage, speed)
+    //{
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

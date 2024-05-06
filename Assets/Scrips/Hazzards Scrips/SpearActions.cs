@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SpearActions : BaseHazzards
 {
-    public SpearActions(int damage, float speed) : base(damage, speed)
-    {
-    }
+    //public SpearActions(int damage, float speed) : base(damage, speed)
+    //{
+    //}
 
     public override void ABMovements()
     {

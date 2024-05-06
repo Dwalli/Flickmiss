@@ -6,18 +6,17 @@ public class BaseHazzards : MonoBehaviour
 {
     [SerializeField]protected int damage;
     [SerializeField]protected float speed;
-    [SerializeField]protected float time;
 
     [SerializeField]protected GameObject pointA, pointB;
 
     protected Vector3 nextLocation;
 
 
-    public BaseHazzards(int damage, float speed) //contructor
-    {
-        this.damage = damage;
-        this.speed = speed;
-    } 
+    //public BaseHazzards(int damage, float speed) //contructor
+    //{
+    //    this.damage = damage;
+    //    this.speed = speed;
+    //} 
 
     // Start is called before the first frame update
     void Start()
