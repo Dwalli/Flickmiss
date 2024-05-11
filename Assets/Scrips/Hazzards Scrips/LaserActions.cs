@@ -33,7 +33,7 @@ public class LaserActions : BaseHazzards
         Debug.Log(transform.position + transform.TransformDirection(dir[setDir] * rayLength));
     }
 
-    void DrawLine(Vector2 startPos, Vector2 endPos) // to draw a line to repersent they ray
+    void DrawLine(Vector2 startPos, Vector2 endPos) // to draw a line to represent they ray
     {
         lineRenderer.SetPosition(0, startPos);
         lineRenderer.SetPosition(1, endPos);

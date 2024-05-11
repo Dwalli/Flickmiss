@@ -9,6 +9,7 @@ public class PlayerMovments : PlayerSystems
     [SerializeField] private PlayerHealth playerHealth;
 
     RaycastHit2D findNodeHit;
+    RaycastHit2D findWallHit;
     public Transform player;
 
     private Vector3 newLocation;
@@ -23,6 +24,8 @@ public class PlayerMovments : PlayerSystems
     private float castTime = 0.1f;
     private float cast;
 
+    [SerializeField] private int range = 20;
+
     private Vector2[] locatedNodes = new Vector2[4]; // array of new possible node locations
     private Vector3[] directions = { new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, -1, 0) }; // right left up down
 
@@ -33,6 +36,7 @@ public class PlayerMovments : PlayerSystems
     void Start()
     {
         GetNodeLocations();
+        newLocation = playerHealth.SpawnPoint();
         clock = resetClcok;
     }
 
@@ -47,8 +51,6 @@ public class PlayerMovments : PlayerSystems
         else { ActivatedNode(node); }
 
         Debug.Log(node);
-
-
 
     }
 
@@ -160,14 +162,22 @@ public class PlayerMovments : PlayerSystems
         int count = 0;
         foreach (var item in locatedNodes)
         {
-            findNodeHit = Physics2D.Raycast(transform.position + directions[count], transform.TransformDirection(directions[count]),12,LayerMask.GetMask("Node's"));  // create the rays only on layer where nodes are at
-            if (findNodeHit.collider != null && findNodeHit.collider.gameObject.layer == 6)
+            findWallHit = Physics2D.Raycast(transform.position + directions[count], transform.TransformDirection(directions[count]), range, LayerMask.GetMask("Wall"));
+            if (findNodeHit.collider != null && findNodeHit.collider.gameObject.layer == 8)
             {
-                locatedNodes[count] = findNodeHit.collider.gameObject.transform.position;
+                locatedNodes[count] = player.position;
             }
             else
             {
-                locatedNodes[count] = player.position; // to provent the player moving to past location
+                findNodeHit = Physics2D.Raycast(transform.position + directions[count], transform.TransformDirection(directions[count]), range, LayerMask.GetMask("Node's"));  // create the rays only on layer where nodes are at
+                if (findNodeHit.collider != null && findNodeHit.collider.gameObject.layer == 6)
+                {
+                    locatedNodes[count] = findNodeHit.collider.gameObject.transform.position;
+                }
+                else
+                {
+                    locatedNodes[count] = player.position; // to provent the player moving to past location
+                }
             }
 
             count++;
@@ -181,10 +191,10 @@ public class PlayerMovments : PlayerSystems
     void DrawRays()
     {
 
-        Debug.DrawRay(transform.position + new Vector3(1, 0, 0), transform.TransformDirection(Vector2.right) * 9, Color.red);  
-        Debug.DrawRay(transform.position + new Vector3(-1, 0, 0), -transform.TransformDirection(Vector2.right) * 9, Color.red);
-        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.TransformDirection(Vector2.up) * 9, Color.red);
-        Debug.DrawRay(transform.position + new Vector3(0, -1, 0), -transform.TransformDirection(Vector2.up) * 9, Color.red);
+        Debug.DrawRay(transform.position + new Vector3(1, 0, 0), transform.TransformDirection(Vector2.right) * range, Color.red);  
+        Debug.DrawRay(transform.position + new Vector3(-1, 0, 0), -transform.TransformDirection(Vector2.right) * range, Color.red);
+        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.TransformDirection(Vector2.up) * range, Color.red);
+        Debug.DrawRay(transform.position + new Vector3(0, -1, 0), -transform.TransformDirection(Vector2.up) * range, Color.red);
     }
 
 

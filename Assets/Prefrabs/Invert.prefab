@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1495115820790776949}
   - component: {fileID: 1495115820790776948}
   - component: {fileID: 1495115820790776951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Invert
   m_TagString: Inverted
   m_Icon: {fileID: 0}
